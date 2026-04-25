@@ -1,512 +1,218 @@
-\# 🖼️ Image Compression Web App
+# 🖼️ Image Compression Web Application
 
+## 📌 Overview
 
+This project is a **full-stack image compression web application** that allows users to upload images, adjust compression quality, and download optimized images.
 
-\## 📌 Overview
+It consists of:
 
+* 🔧 A **Flask backend API** for image processing
+* 🎨 A **React frontend** for user interaction
+* 🔗 Seamless integration via HTTP requests (REST API)
 
+---
 
-This project is a \*\*full-stack image compression web application\*\* that allows users to upload images, compress them by adjusting quality, and download the optimized result.
-
-
-
-The system is built using a \*\*Flask backend API\*\* and a \*\*React (Vite) frontend\*\*, connected through REST APIs.
-
-
-
-\---
-
-
-
-\## 🎯 Motivation
-
-
+## 🚀 Motivation
 
 High-resolution images consume significant storage and bandwidth. This project was built to:
 
+* Reduce image size without major quality loss
+* Provide a simple UI for compression control
+* Demonstrate full-stack development with API integration
+
+---
+
+## 🧱 Tech Stack
+
+### Backend
+
+* **Flask** – Lightweight Python web framework
+* **OpenCV (cv2)** – Image compression engine
+* **NumPy** – Image array manipulation
+* **Pillow (PIL)** – Image validation
+* **Flask-CORS** – Cross-origin communication
+
+### Frontend
+
+* **React.js** – UI development
+* **Vite** – Fast frontend build tool
+* **HTML/CSS** – Styling and layout
 
 
-\* Reduce image size efficiently
+---
 
-\* Provide a simple UI for users to control compression quality
+## ⚙️ Backend Implementation
 
-\* Demonstrate full-stack development and API integration
-
-
-
-\---
-
-
-
-\## 🧱 Tech Stack
-
-
-
-\### 🔹 Backend
-
-
-
-\* Python
-
-\* Flask
-
-\* OpenCV (cv2)
-
-\* NumPy
-
-\* Pillow (PIL)
-
-\* Flask-CORS
-
-\* Werkzeug
-
-
-
-\### 🔹 Frontend
-
-
-
-\* React.js (Vite)
-
-\* Axios (for API calls)
-
-\* HTML/CSS
-
-
-
-\---
-
-
-
-\## ⚙️ System Architecture
-
-
+### 📁 Structure
 
 ```
-
-\[ React Frontend ]  →  \[ Flask API Server ]  →  \[ Image Processing ]
-
-&#x20;       |                        |                      |
-
-&#x20;  Upload Image           Validate Input        Compress Image
-
-&#x20;  Set Quality  ───────→  Process Request  ───→  Return Output
-
-```
-
-
-
-\---
-
-
-
-\## 🔌 Backend Implementation
-
-
-
-\### 📁 Structure
-
-
-
-```
-
 app/
+ ├── __init__.py       → App factory & CORS setup
+ ├── routes.py         → API endpoints
+ ├── models.py         → Placeholder
+ └── forms.py          → Optional form handling
 
-&#x20;├── \_\_init\_\_.py      # App factory \& CORS setup
-
-&#x20;├── routes.py        # API endpoints
-
-&#x20;├── models.py        # Placeholder (not heavily used)
-
-&#x20;├── forms.py         # Optional
-
-&#x20;└── templates/
-
+run.py                 → Entry point
+requirements.txt       → Dependencies
 ```
 
+---
 
+### 🔌 API Endpoint
 
-\---
+#### `POST /upload`
 
+Handles image compression.
 
+### 📥 Request
 
-\### 🚀 App Initialization
+* Form-data:
 
+  * `file` → Image file (jpg/png/jpeg)
+  * `quality` → Compression level (0–100)
 
+---
 
-\* Uses \*\*Flask Application Factory Pattern\*\*
+### ⚙️ Processing Flow
 
-\* Enables CORS to allow frontend communication
+1. Validate file presence
+2. Check file type (`imghdr`)
+3. Verify image using Pillow
+4. Convert image → NumPy array
+5. Compress using OpenCV:
 
+   ```python
+   cv2.imencode('.jpg', img, [cv2.IMWRITE_JPEG_QUALITY, quality])
+   ```
+6. Return compressed image as response
 
+---
+
+### 📤 Response
+
+* Compressed image file (binary stream)
+
+---
+
+## 🎨 Frontend Implementation
+
+### Key Features
+
+* Image upload interface
+* Quality slider (user-controlled compression)
+* Preview + download option
+
+---
+
+### ⚙️ Workflow
+
+1. User selects an image
+2. Adjusts compression quality
+3. Clicks upload
+4. Sends request to backend using:
+
+   ```javascript
+   fetch("http://localhost:5000/upload", {
+       method: "POST",
+       body: formData
+   })
+   ```
+5. Receives compressed image
+6. Displays/downloads result
+
+---
+
+## 🔗 Backend–Frontend Integration
+
+### CORS Configuration
+
+Backend allows frontend communication:
 
 ```python
-
-CORS(app, origins=\["http://localhost:5173"])
-
+CORS(app, origins=["http://localhost:5173"])
 ```
 
+### Data Flow
 
+* Frontend sends `multipart/form-data`
+* Backend processes image
+* Backend returns binary image
+* Frontend converts response → downloadable file
 
-\---
+---
 
+## ▶️ How to Run
 
-
-\### 📡 API Endpoint
-
-
-
-\#### `POST /upload`
-
-
-
-Handles image upload and compression.
-
-
-
-\---
-
-
-
-\### 🔄 API Workflow
-
-
-
-1\. \*\*Receive Request\*\*
-
-
-
-&#x20;  \* Accepts `multipart/form-data`
-
-&#x20;  \* Fields:
-
-
-
-&#x20;    \* `file` → image
-
-&#x20;    \* `quality` → compression level (0–100)
-
-
-
-2\. \*\*Validation\*\*
-
-
-
-&#x20;  \* Check file existence
-
-&#x20;  \* Validate extension (`jpg`, `jpeg`, `png`)
-
-&#x20;  \* Verify actual image type using:
-
-
-
-&#x20;    \* `imghdr`
-
-&#x20;    \* `PIL`
-
-
-
-3\. \*\*Processing\*\*
-
-
-
-&#x20;  \* Convert image → NumPy array
-
-&#x20;  \* Compress using OpenCV:
-
-
-
-&#x20;  ```python
-
-&#x20;  cv2.imencode('.jpg', img, \[cv2.IMWRITE\_JPEG\_QUALITY, quality])
-
-&#x20;  ```
-
-
-
-4\. \*\*Response\*\*
-
-
-
-&#x20;  \* Returns compressed image as binary response
-
-
-
-\---
-
-
-
-\## 🎨 Frontend Implementation
-
-
-
-\### 📁 Structure
-
-
-
-```
-
-src/
-
-&#x20;├── components/
-
-&#x20;├── App.jsx
-
-&#x20;├── main.jsx
-
-```
-
-
-
-\---
-
-
-
-\### 🖥️ Features
-
-
-
-\* Upload image
-
-\* Adjust compression quality (slider/input)
-
-\* Preview compressed image
-
-\* Download result
-
-
-
-\---
-
-
-
-\### 🔗 API Integration
-
-
-
-\* Uses \*\*Axios\*\* to call backend
-
-
-
-```javascript
-
-const formData = new FormData();
-
-formData.append("file", image);
-
-formData.append("quality", quality);
-
-
-
-const response = await axios.post(
-
-&#x20; "http://localhost:5000/upload",
-
-&#x20; formData,
-
-&#x20; { responseType: "blob" }
-
-);
-
-```
-
-
-
-\---
-
-
-
-\### 🔄 Frontend Workflow
-
-
-
-1\. User selects image
-
-2\. User sets quality
-
-3\. Sends POST request to backend
-
-4\. Receives compressed image (blob)
-
-5\. Displays/downloads output
-
-
-
-\---
-
-
-
-\## 🔗 Backend ↔ Frontend Integration
-
-
-
-\* Backend runs on: `http://localhost:5000`
-
-\* Frontend runs on: `http://localhost:5173`
-
-
-
-\### Key Integration Points:
-
-
-
-\* CORS enabled in Flask
-
-\* Axios handles HTTP requests
-
-\* Binary image response handled using `blob`
-
-
-
-\---
-
-
-
-\## 🧪 How to Run Locally
-
-
-
-\### 🔹 Backend
-
-
+### 1. Clone Repository
 
 ```bash
+git clone https://github.com/your-username/image-compression-api.git
+cd image-compression-api
+```
 
-cd backend
+---
 
+### 2. Backend Setup
+
+```bash
 python -m venv venv
-
-venv\\Scripts\\activate   # Windows
-
-
+venv\Scripts\activate   # Windows
 
 pip install -r requirements.txt
-
 python run.py
-
 ```
 
+Runs on:
 
+```
+http://localhost:5000
+```
 
-\---
+---
 
-
-
-\### 🔹 Frontend
-
-
+### 3. Frontend Setup
 
 ```bash
-
 cd frontend
-
 npm install
-
 npm run dev
-
 ```
 
+Runs on:
 
+```
+http://localhost:5173
+```
 
-\---
+---
 
+## 🧪 Example API Usage
 
+Using curl:
 
-\## 📷 Supported Formats
+```bash
+curl -X POST http://localhost:5000/upload \
+  -F "file=@image.jpg" \
+  -F "quality=50" \
+  --output compressed.jpg
+```
 
+---
 
+## 📚 Learnings
 
-\* JPG
+* Building REST APIs with Flask and POSTMAN
+* Handling file uploads securely
+* Image processing using OpenCV
+* Integrating React with backend APIs
+* Managing CORS issues in full-stack apps
 
-\* JPEG
+---
 
-\* PNG (converted to JPEG during compression)
+## 👨‍💻 Author - Me
 
+Developed as a full-stack project to demonstrate backend API design and frontend integration.
 
-
-\---
-
-
-
-\## ⚠️ Limitations
-
-
-
-\* PNG transparency is lost
-
-\* No file size restriction
-
-\* No drag-and-drop UI
-
-\* No authentication system
-
-
-
-\---
-
-
-
-\## 🚀 Future Improvements
-
-
-
-\* Add WebP support
-
-\* Preserve PNG transparency
-
-\* Add drag-and-drop UI
-
-\* Deploy using Docker
-
-\* Add cloud storage (AWS S3 / Firebase)
-
-
-
-\---
-
-
-
-\## 📌 Key Learnings
-
-
-
-\* Building REST APIs using Flask
-
-\* Image processing with OpenCV
-
-\* Handling file uploads securely
-
-\* Frontend–backend integration
-
-\* Working with binary data (blob responses)
-
-
-
-\---
-
-
-
-\## 📜 License
-
-
-
-This project is open-source and free to use.
-
-
-
-\---
-
-
-
-\## 🙌 Acknowledgements
-
-
-
-\* Flask Documentation
-
-\* OpenCV Documentation
-
-\* React + Vite ecosystem
-
+---
 
 

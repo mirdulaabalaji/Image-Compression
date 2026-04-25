@@ -1,0 +1,30 @@
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 2rem;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  display: grid;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+input[type="file"] {
+  padding: 0.5rem;
+  border: 2px dashed #ccc;
+}
+
+button {
+  background: #646cff;
+  color: white;
+  padding: 0.8rem;
+  border: none;
+  cursor: pointer;
+}

@@ -1,18 +1,18 @@
-# 🖼️ Image Compression Web Application
+#  Image Compression Web Application
 
-## 📌 Overview
+##  Overview
 
 This project is a **full-stack image compression web application** that allows users to upload images, adjust compression quality, and download optimized images.
 
 It consists of:
 
-* 🔧 A **Flask backend API** for image processing
-* 🎨 A **React frontend** for user interaction
-* 🔗 Seamless integration via HTTP requests (REST API)
+*  A **Flask backend API** for image processing
+*  A **React frontend** for user interaction
+*  Seamless integration via HTTP requests (REST API)
 
 ---
 
-## 🚀 Motivation
+##  Motivation
 
 High-resolution images consume significant storage and bandwidth. This project was built to:
 
@@ -22,7 +22,7 @@ High-resolution images consume significant storage and bandwidth. This project w
 
 ---
 
-## 🧱 Tech Stack
+##  Tech Stack
 
 ### Backend
 
@@ -41,9 +41,9 @@ High-resolution images consume significant storage and bandwidth. This project w
 
 ---
 
-## ⚙️ Backend Implementation
+##  Backend Implementation
 
-### 📁 Structure
+###  Structure
 
 ```
 app/
@@ -58,13 +58,13 @@ requirements.txt       → Dependencies
 
 ---
 
-### 🔌 API Endpoint
+###  API Endpoint
 
 #### `POST /upload`
 
 Handles image compression.
 
-### 📥 Request
+###  Request
 
 * Form-data:
 
@@ -73,7 +73,7 @@ Handles image compression.
 
 ---
 
-### ⚙️ Processing Flow
+###  Processing Flow
 
 1. Validate file presence
 2. Check file type (`imghdr`)
@@ -88,13 +88,13 @@ Handles image compression.
 
 ---
 
-### 📤 Response
+###  Response
 
 * Compressed image file (binary stream)
 
 ---
 
-## 🎨 Frontend Implementation
+##  Frontend Implementation
 
 ### Key Features
 
@@ -104,7 +104,7 @@ Handles image compression.
 
 ---
 
-### ⚙️ Workflow
+###  Workflow
 
 1. User selects an image
 2. Adjusts compression quality
@@ -122,7 +122,7 @@ Handles image compression.
 
 ---
 
-## 🔗 Backend–Frontend Integration
+##  Backend–Frontend Integration
 
 ### CORS Configuration
 
@@ -141,7 +141,7 @@ CORS(app, origins=["http://localhost:5173"])
 
 ---
 
-## ▶️ How to Run
+##  How to Run
 
 ### 1. Clone Repository
 
@@ -186,7 +186,7 @@ http://localhost:5173
 
 ---
 
-## 🧪 Example API Usage
+##  Example API Usage
 
 Using curl:
 
@@ -199,7 +199,7 @@ curl -X POST http://localhost:5000/upload \
 
 ---
 
-## 📚 Learnings
+##  Learnings
 
 * Building REST APIs with Flask and POSTMAN
 * Handling file uploads securely
@@ -209,7 +209,7 @@ curl -X POST http://localhost:5000/upload \
 
 ---
 
-## 👨‍💻 Author - Me
+##  Author - Me
 
 Developed as a full-stack project to demonstrate backend API design and frontend integration.
 
